@@ -1,0 +1,30 @@
+package org.codedecode.userinfo.controller;
+
+
+import org.codedecode.userinfo.dto.UserDTO;
+import org.codedecode.userinfo.repository.UserRepo;
+import org.codedecode.userinfo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/addUser")
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
+        UserDTO savedUser=userService.addUser(userDTO);
+
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/fetchUserById/{id}")
+    public ResponseEntity<UserDTO> fetchUserById(@PathVariable Integer id){
+        return userService.fetchUserDetailsById(id);
+
+    }
+}
